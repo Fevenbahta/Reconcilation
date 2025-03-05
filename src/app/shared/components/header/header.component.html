@@ -1,0 +1,80 @@
+
+
+<div  class="fixed-header" style="border-radius:20% ">
+    <nav class="navbar navbar-expand-lg p-1 navbar-absolute " style="background: linear-gradient(to left, #fafafa, #fcfcfc); border-radius: 1%; overflow: hidden;padding-left: 10;">
+  <div class="container-fluid ">   
+     <button class="white" mat-icon-button (click)="toggleSideBar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a  class="simple-text">
+            
+                <img  class="logo-img"src="/assets/img/logolib.png"/>
+                <span class="ml-2 logo-text">Lion International Bank S.C</span>
+                <span class="ml-2 logotext">: Reconcilation</span>
+
+                      </a>
+     
+        <div class="collapse navbar-collapse mr-5 justify-content-end" id="navigation">
+            <ul class="navbar-nav mr-5">
+                <li class="nav-item mr-5 ">
+                    <div class="row mr-5">
+                        <div class="col-md-4 ">
+                            <a class="nav-link"  href="#" (click)="logout()">
+                                <p>
+                                    <span class="nav-link-text">  <mat-icon>exit_to_app</mat-icon>logout</span>
+                                </p>
+                            </a>
+                        </div>
+                     
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    </nav>
+</div>
+
+
+
+
+
+
+
+<!-- <mat-toolbar style="background: linear-gradient(to right, rgb(233, 200, 12), rgb(255, 102, 0))">
+
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="toggleSideBar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <span> APP LOGO </span>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <ul fxLayout="row" fxLayoutGap="20px">
+                <li>
+                    <button mat-icon-button>
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </li>
+                <li>
+                    <button mat-icon-button>
+                        <mat-icon>help_outline</mat-icon>
+                    </button>
+                </li>
+                <li>
+                    <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>person_outline</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>exit_to_app</mat-icon>
+                            Sign out
+                        </button>
+                    </mat-menu>
+
+                </li>
+            </ul>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar> -->

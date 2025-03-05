@@ -1,0 +1,17 @@
+
+<ng-container >
+    <mat-drawer-container >
+      <mat-drawer  mode="side" [opened]="sideBarOpen">
+        <app-sidebar></app-sidebar>
+      </mat-drawer>
+      <mat-drawer-content >
+        <app-header class="fixed"(toggleSideBarForMe)="toggleSideBar($event)" ></app-header>
+        <router-outlet></router-outlet>
+        <app-footer></app-footer>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </ng-container>
+  <ng-template #loginTemplate>
+    <router-outlet></router-outlet>
+  </ng-template>
+  

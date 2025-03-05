@@ -1,0 +1,24 @@
+<app-nav class="fixed-header sharednav" [buttons]="buttons"></app-nav>
+
+<div class="mt-5">
+  <div class="row mt-5">
+    <div class="col-md-12 mt-5 ml-5">
+      <div class="mb-5 mt-5">
+        <div class="card">
+  
+<div class="card mt-5">
+  <h2 class="card-title">Out RTGS ATS Import Page</h2>
+
+  <div class="upload-section">
+    <label class="customfileinput">
+      <input type="file" (change)="onFileSelected($event)" />
+      <span>Select Excel File</span>
+    </label>
+  </div>
+
+  <button class="upload-button" [disabled]="!selectedFile" (click)="uploadFile()">Upload File</button>
+
+  <div class="status-message" [ngClass]="{'success': message === 'File uploaded successfully!', 'error': message === 'Error uploading file.'}">
+    {{ message }}
+  </div>
+</div>

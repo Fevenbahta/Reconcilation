@@ -1,0 +1,31 @@
+
+
+<div  class="sidebar ">
+    <div class="container-fluid">
+        <div class="logo">
+            <a href="#" class="simple-text">
+                <div>
+                    <img  class="logo-img"src="/assets/img/LIBLogo2.jpg"/>
+                </div>
+           
+                  
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+        
+            <ul class="nav">
+                <p class="ml-3 cardbody">welcome {{ user }}</p>               
+                <li class="nav-item">
+                    <a class="nav-link  "routerLink="/Change" *ngIf="display">
+                   
+                    <p routerLinkActive="itm" class="color ">Change Password</p>
+          
+                </a></li>
+
+                 
+            </ul>
+        </div>
+    </div>
+</div>
+
+

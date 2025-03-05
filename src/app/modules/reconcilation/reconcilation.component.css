@@ -1,0 +1,337 @@
+
+  
+  
+  
+  .loadingspinnercontainer {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1100;
+    font-family: 'Times New Roman', Times, serif;
+    color: #984151;
+  }
+  .loading-overlay {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent to apply blur over background */
+    z-index: 1000;
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  }
+  
+  .color{
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .btnsp{
+      color:#984151;
+      font-family: 'Times New Roman', Times, serif;
+  }
+  .cardhead{
+    background-color:rgb(217, 222, 224);
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+  
+  }
+  .carhead{
+    background-color:#80353c;
+    color:black;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .fixed-header {
+    position:fixed;
+    top: 90px;
+    width: 100%;
+    z-index: 100; /* Adjust z-index as needed */
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .btnex{
+    color: #335c73;
+    background-color: #f8fafa;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .btndel{
+    color: black;
+    background-color: #f8fafa;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  
+  /* Style for the search button */
+  button {
+  padding: 8px 12px;
+  background-color:#ffffff;;
+  color: rgb(10, 10, 10);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Times New Roman', Times, serif;
+  }
+  
+  button:hover {
+  background-color:#bed5da;;
+  font-family: 'Times New Roman', Times, serif;
+  }
+
+
+  .white{
+    color:#335c73;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .compact-table th {
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    font-weight:650; /* Adjust the font size as needed */
+  }
+  .compact-table tr {
+    font-size: 12px; 
+    font-family: 'Times New Roman', Times, serif;/* Adjust the font size as needed */
+  }
+  
+  .compact-table th, .compact-table td {
+    padding: 4px 8px; 
+  }
+  td ,th{
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  
+  .small{
+    width:5%;
+  }
+  .btndanger{
+    color: rgb(248, 245, 245);
+  
+  }
+
+  
+
+
+  .search{
+  box-shadow: 0 0 1px 0 #bbb;
+  border-color: #80353c;
+  outline: none;
+  }
+  
+  .btndelete{
+    background-color: hsl(191, 27%, 80%);
+   
+    color:black;
+    border-radius: 20px; /* Adjust the value to control the roundness */
+    padding: 7px 12px; /* Add padding for better appearance */
+    font-size: 14px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; /* Adjust the font size *//* Text color */
+    /* Remove border */
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer; /* Add cursor pointer on hover */
+    transition: background-color 0.3s;
+  }
+  .btnsave{
+    background-color: #335c73;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    
+  }
+  .table-container {
+    width: 100%; /* Set the width of the container */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+  }
+  
+  .table-striped tbody tr:nth-child(odd) td {
+    background-color: #f2f2f2; /* Optional: Alternating row background color */
+  }
+  
+  .table-striped tbody tr td {
+    border-right: 1px solid #ddd; /* Add right border between columns */
+  }
+  
+  .table-striped thead th {
+    border-bottom: 2px solid #ddd; /* Add bottom border to table header */
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    max-height: 400px; /* Adjust as needed */
+  }
+  
+  .table-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .table-container::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  .table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .btngray{
+    background: white;
+    color:#80353c;
+  }
+
+  /* Style for the fixed header navigation component */
+app-nav.fixed-header.sharednav {
+    background-color: #343a40; /* Dark background for the nav */
+    color: black; /* White text color */
+    padding: 10px 15px; /* Padding around the navigation */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+  }
+  
+  /* General container padding and spacing */
+  .mt-5 {
+    margin-top: 3rem;
+  }
+  
+  .ml-5 {
+    margin-left: 3rem;
+  }
+  
+  .mb-5 {
+    margin-bottom: 3rem;
+  }
+  
+  /* Styling for the card component */
+  .card {
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensure children stay within card bounds */
+        color: black;
+  }
+  
+  /* Style for card header with navigation tabs */
+  .card-header {
+    background-color: #f8f9fa; /* Light background for tabs */
+    color: black;
+    border-bottom: 1px solid #ddd; /* Border separating tabs from content */
+  }
+  
+  /* Navigation tabs styling */
+  .navtabs {
+    border-bottom: 2px solid #01a1db; /* Blue underline for active tab */
+  }
+  
+  .navitem {
+    margin-bottom: -1px; /* Remove space below tabs */
+  }
+  
+  .navlink {
+    border: 1px solid transparent; /* Border for spacing consistency */
+    border-radius: 4px 4px 0 0; /* Rounded corners for top tabs */
+    padding: 10px 15px; /* Padding inside tab links */
+    color: #01a1db; /* Blue color for tab text */
+    text-decoration: none;
+  }
+  
+  .navlink.active {
+    background-color: #ffffff; /* White background for active tab */
+    color: #01a1db; /* Blue text for active tab */
+    border-color: #ddd; /* Light border color for active tab */
+  }
+  
+  /* Tab content area */
+  .tab-content {
+    padding: 15px; /* Padding around the content */
+  }
+  
+  /* Table styling */
+  .table {
+    width: 100%; /* Full width table */
+    margin-bottom: 1rem; /* Space below the table */
+    color: #212529; /* Dark text color */
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9; /* Striped rows */
+  }
+  
+  .table-responsive {
+    overflow-x: auto; /* Horizontal scroll for smaller screens */
+  }
+  
+  .compact-table th,
+  .compact-table td {
+    padding: 0.75rem; /* Padding inside table cells */
+  }
+  
+  .table th {
+    background-color: #e9ecef; /* Light background for table headers */
+    border-bottom: 2px solid #ddd; /* Border below headers */
+  }
+  
+  /* Pagination controls */
+  .pagination {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon {
+    font-size: 20px; /* Icon size */
+    vertical-align: middle; /* Align icon with text */
+  }
+  
+  /* Button styles */
+  .btn.btndelete {
+       border: none; /* Remove default border */
+  }
+  
+  .btn.btndelete:hover {
+     }
+  
+  /* Loading spinner container */
+  .loading-spinner-container {
+    text-align: center; /* Center the spinner */
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 767.98px) {
+    .mt-5 {
+      margin-top: 2rem; /* Reduced margin on small screens */
+    }
+  
+    .ml-5 {
+      margin-left: 1rem; /* Reduced left margin on small screens */
+    }
+  }
+  /* Styling for the filter button */
+.btn-primary {
+  background-color: #01a1db !important;
+  border-color: #01a1db !important;
+}
+
+.btn-primary:hover {
+  background-color: #018bbf !important; /* Slightly darker shade on hover */
+  border-color: #018bbf !important;
+}
+
+/* Styling for form inputs */
+.form-control {
+  border: 1px solid #01a1db;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 5px rgba(1, 161, 219, 0.5);
+  border-color: #01a1db;
+}
+
+/* Icon color for filter buttons */
+.material-icons {
+  color: #01a1db !important;
+}
+.align{
+  margin-left: 600px;
+}
+.alignleft{
+  margin-left: 1000px; 
+}

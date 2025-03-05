@@ -1,0 +1,246 @@
+<app-nav class="fixed-header sharednav" [buttons]="buttons"></app-nav>
+
+<div class="mt-5">
+  <div class="row mt-5">
+    <div class="col-md-12 mt-5 ml-5">
+      <div class="mb-5 mt-5">
+        <div class="card">
+          <div class="card-header mt-5">
+    
+            <ul class="nav navtabs">
+              <li class="navitem mr-3">
+                <a class="navlink active " data-toggle="tab" href="#reconciled">Reconciled</a>
+              </li>
+              <li class="navitem mr-3">
+                <a class="navlink" data-toggle="tab" href="#outrtgsbc">Outgoing-RTGS-CBS</a>
+              </li>
+              <li class="navitem">
+                <a class="navlink" data-toggle="tab" href="#outrtgsats">Outgoing-RTGS-ATS</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <div class="tab-content">
+              <!-- Reconciled Tab -->
+              <div id="reconciled" class="container tab-pane active">
+                <h6 class="mt-3">Reconciled</h6>
+                <div class="d-flex justifycontentbetween ">
+                  <button (click)="generateReconciliation()" class="btn btn-sm btngray">
+                    <mat-icon>sync</mat-icon> Generate
+                  </button>
+                </div>
+
+                
+                <div class="row">
+                  <div class="col-md-3">
+                    <input class="form-control" type="date" [(ngModel)]="reconciledStartDate" placeholder="Start Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="date" [(ngModel)]="reconciledEndDate" placeholder="End Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="text" [(ngModel)]="reconciledAccount" placeholder="Account No">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="number" [(ngModel)]="reconciledAmount" placeholder="Amount">
+                  </div>
+                  <div class="col-md-12 mt-3 align">
+                    <button (click)="onMultipleReconciledSearch()" class="btn btn-sm btn-primary ">
+                      Filter
+                    </button>
+                  </div>
+                </div>
+                <div class="pagination mt-3 ml-3">
+                  <button mat-button (click)="onPreviousPage()" [disabled]="currentPage === 1">
+                    <mat-icon class="custom-icon">keyboard_arrow_left</mat-icon>
+                  </button>
+                  <span> Page {{ currentPage }} </span>
+                  <button mat-button (click)="onNextPage()" [disabled]="currentPage * pageSize >= reconcileds.length">
+                    <mat-icon class="custom-icon">keyboard_arrow_right</mat-icon>
+                  </button>
+                  <p>{{ pageSize * currentPage }} of {{ reconcileds.length }}</p>
+                </div><div *ngIf="isSearching"class="loading-overlay">
+
+                <div  class="loadingspinnercontainer">
+                  <mat-spinner diameter="50" color="btnsp"></mat-spinner>
+                </div></div>
+                <h6 class="mt-3">Reconciled (Total: {{ (filteredReconcileds?.length || reconcileds?.length) }})</h6>
+
+                <table class="table table-responsive table-striped col-md-12 compact-table" *ngIf="filteredReconcileds.length || reconcileds.length">
+                  <button class="btn btndelete" (click)="exportToExcel()">
+                    <i class="material-icons ">save_alt</i>
+                  </button>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Branch</th>
+                      <th>Account</th>
+                      <th>Amount</th>
+                      <th>Inputting Branch</th>
+                      <th>Type</th>
+                      <th>Reference</th>
+                      <th>Debitor</th>
+                      <th>Creditor</th>
+                      <th>Ordering Account</th>
+                      <th>Beneficiary Account</th>
+                      <th>Business Date</th>
+                      <th>Entry Date</th>
+                      <th>Currency</th>
+                      <th>Processing Status</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let it of filteredReconcileds || reconcileds; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ it?.branch || '' }}</td>
+                      <td>{{ it?.account }}</td>
+                      <td>{{ it?.amount }}</td>
+                      <td>{{ it?.inputinG_BRANCH }}</td>
+                      <td>{{ it?.type }}</td>
+                      <td>{{ it?.reference }}</td>
+                      <td>{{ it?.debitor }}</td>
+                      <td>{{ it?.creditor }}</td>
+                      <td>{{ it?.orderingAccount }}</td>
+                      <td>{{ it?.beneficiaryAccount }}</td>
+                      <td>{{ it?.businessDate | date: 'yyyy-MM-dd' }}</td>
+                      <td>{{ it?.entryDate | date: 'yyyy-MM-dd' }}</td>
+                      <td>{{ it?.currency }}</td>
+                      <td>{{ it?.processingStatus }}</td>
+                      <td>{{ it?.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        
+              <!-- OUTRTGSCBC Tab -->
+              <div id="outrtgsbc" class="container tab-pane fade">
+                <h6 class="mt-3">OUTGOING-RTGS-CBS</h6>
+                <button class="btn btndelete" (click)="exportToExcelOutRtgsCbc()">
+                  <i class="material-icons">save_alt</i> 
+                </button>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <input class="form-control" type="date" [(ngModel)]="cbcStartDate" placeholder="Start Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="date" [(ngModel)]="cbcEndDate" placeholder="End Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="text" [(ngModel)]="cbcAccount" placeholder="Account No">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="number" [(ngModel)]="cbcAmount" placeholder="Amount">
+                  </div>
+                  <div class="col-md-12 mt-3 align">
+                    <button (click)="onMultipleCBCSearch()" class="btn btn-sm btn-primary">
+                      Filter
+                    </button>
+                  </div>
+                </div>
+                <h6 class="mt-3">OUTGOING-RTGS-CBS (Total: {{ filteredOutRtgsCbc?.length }})</h6>
+
+                <table class="table table-responsive table-striped col-md-12 compact-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Reference No</th>
+                      <th>Branch</th>
+                      <th>Account</th>
+                      <th>Debitor Name</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                      <th>Inputting Branch</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let it of filteredOutRtgsCbc; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ it?.refno }}</td>
+                      <td>{{ it?.branch || '' }}</td>
+                        <td>{{ it?.account }}</td>
+                      <td>{{ it?.debitoR_NAME }}</td>
+                      <td>{{ it?.discription }}</td>
+                      <td>{{ it?.amount }}</td>
+                      <td>{{ it?.inputinG_BRANCH }}</td>
+                      <td>{{ it?.datet  }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- OUTRTGSATS Tab -->
+              <div id="outrtgsats" class="container tab-pane fade">
+                <h6 class="mt-3">OUTGOING-RTGS-ATS</h6>
+                <button class="btn btndelete" (click)="exportToExcelOutRtgsAts()">
+                  <i class="material-icons">save_alt</i> 
+                </button>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <input class="form-control " type="date" [(ngModel)]="atsStartDate" placeholder="Start Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="date" [(ngModel)]="atsEndDate" placeholder="End Date">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="text" [(ngModel)]="atsAccount" placeholder="Account No">
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" type="number" [(ngModel)]="atsAmount" placeholder="Amount">
+                  </div>
+                  <div class="col-md-12 mt-3 align">
+                    <button (click)="onMultipleATSSearch()" class="btn btn-sm btn-primary">
+                      Filter
+                    </button>
+                  </div>
+                </div>
+                <h6 class="mt-3">OUTGOING-RTGS-ATS (Total: {{ filteredOutRtgsCbc?.length }})</h6>
+
+                <table class="table table-responsive table-striped col-md-12 compact-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Type</th>
+                      <th>Reference</th>
+                      <th>Debitor</th>
+                      <th>Creditor</th>
+                      <th>Ordering Account</th>
+                      <th>Beneficiary Account</th>
+                      <th>Business Date</th>
+                      <th>Entry Date</th>
+                      <th>Currency</th>
+                      <th>Amount</th>
+                      <th>Processing Status</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let it of filteredOutRtgsAts; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ it?.type }}</td>
+                      <td>{{ it?.reference }}</td>
+                      <td>{{ it?.debitor }}</td>
+                      <td>{{ it?.creditor }}</td>
+                      <td>{{ it?.orderingAccount }}</td>
+                      <td>{{ it?.beneficiaryAccount }}</td>
+                      <td>{{ it?.businessDate | date: 'yyyy-MM-dd' }}</td>
+                      <td>{{ it?.entryDate | date: 'yyyy-MM-dd' }}</td>
+                      <td>{{ it?.currency }}</td>
+                      <td>{{ it?.amount}}</td>
+                      <td>{{ it?.processingStatus }}</td>
+                      <td>{{ it?.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.actives{
+  background-color: #76a53b;
+  
+}
+.nav-item{
+   
+  background: linear-gradient(to left, #0595a8, #16c1e4); 
+
+}
+.cardbody{
+  font-family: 'Times New Roman', Times, serif;
+  
+}
+.color{
+ color:white; 
+}
+.font{
+  font-size: small;
+}
+.nv{
+  color:#76a53b;
+}
+.itm{
+  color:white;
+}
+.i:active{
+   color:white;
+}
+  .logo-img{
+    width:30%;
+    height: 30%;
+      }
+      .sidebar {
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+        overflow: hidden;
+        width: 200px;
+        box-shadow:rgb(248, 247, 247);
+      }
+
+  .logo-img{
+    width:30%;
+    height: 30%;
+      }
+      .nav-li{
+color:rgb(255, 255, 255);
+size: small;
+
+text-decoration-line: none;
+      }
