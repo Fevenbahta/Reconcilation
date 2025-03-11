@@ -24,14 +24,103 @@ export class ReconcilationService {
   getAllOutRtgsCbcs(): Observable<OutRtgsCbc[]> {
     return this.http.get<OutRtgsCbc[]>(this.apiUrlService.apiUrl + 'OutRtgsCbc');
   }
-
-  // importExcel(file: File): Observable<any> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('file', file);
+  getOutReconciledByDateInterval(startDate: string, endDate: string): Observable<Reconciled[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
   
-
-  //   return this.http.post(`${this.apiUrlService.apiUrl}OutRtgsAts/import`, formData);
-  // }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<Reconciled[]>(this.apiUrlService.apiUrl + 'OutReconciled/dateRange', httpOptions);
+  }
+  
+  getOutRtgsAtsByDateInterval(startDate: string, endDate: string): Observable<OutRtgsAts[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<OutRtgsAts[]>(this.apiUrlService.apiUrl + 'OutRtgsAts/dateRange', httpOptions);
+  }
+  
+  getOutRtgsCbcByDateInterval(startDate: string, endDate: string): Observable<OutRtgsCbc[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<OutRtgsCbc[]>(this.apiUrlService.apiUrl + 'OutRtgsCbc/dateRange', httpOptions);
+  }
+  
+  getInRtgsCbcByDateInterval(startDate: string, endDate: string): Observable<InRtgsCbc[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<InRtgsCbc[]>(this.apiUrlService.apiUrl + 'InRtgsCbc/dateRange', httpOptions);
+  }
+  
+  getInRtgsAtsByDateInterval(startDate: string, endDate: string): Observable<InRtgsAts[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<InRtgsAts[]>(this.apiUrlService.apiUrl + 'InRtgsAts/dateRange', httpOptions);
+  }
+  
+  getInReconciledByDateInterval(startDate: string, endDate: string): Observable<InReconciled[]> {
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }),
+      params: params
+    };
+  
+    return this.http.get<InReconciled[]>(this.apiUrlService.apiUrl + 'InReconciled/dateRange', httpOptions);
+  }
+  
+ 
   importExcel(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);  // Append the file to the form data

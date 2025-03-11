@@ -59,45 +59,7 @@ export class ReconcilationComponent {
 
 
   ngOnInit(): void {
-this.isSearching=true
-    this.reconcilationService.getAllReconcileds().subscribe({
-      next: (re) => {
-        const startIndex = (this.currentPage - 1) * this.pageSize;
-        const endIndex = startIndex + this.pageSize;
-        this.reconcileds=re;
-         this.filteredReconcileds = re
-        const lastlist = this.reconcileds.pop();
-        this.reconcileds.unshift(lastlist);
-        this.filteredReconcileds = re
-      this.isSearching=false
-        console.log(re);
-      },
-      error(response) {
-        console.log(response);
-      },
-    });
-    this.reconcilationService.getAllOutRtgsCbcs().subscribe({
-      next: (re) => {
-           this.outRtgsCbc=re;
-         this.filteredOutRtgsCbc = re
-           
-        console.log(re);
-      },
-      error(response) {
-        console.log(response);
-      },
-    });
-    this.reconcilationService.getAllOutRtgsAtss().subscribe({
-      next: (re) => {
-           this.outRtgsAts=re;
-         this.filteredOutRtgsAts = re
-         
-        console.log(re);
-      },
-      error(response) {
-        console.log(response);
-      },
-    });
+
   }
 
   onNextPage() {
@@ -398,91 +360,97 @@ this.isSearching=true
        }
     );
   }  
-  onMultipleReconciledSearch() {
+  onMultipleReconciledSearch(): void {
     this.ngxService.start();
-   
-    // Assuming filteredStartDate and filteredEndDate are in 'YYYY-MM-DD' format
+  
+    // Normalize start and end date
     const startDate = new Date(this.reconciledStartDate);
     const endDate = new Date(this.reconciledEndDate);
-    // Normalize start date to beginning of the day (00:00:00)
     startDate.setHours(0, 0, 0, 0);
-    // Adjusting end date to include the full day by setting the time to 23:59:59
     endDate.setHours(23, 59, 59, 999);
   
-    this.filteredReconcileds = this.reconcileds.filter(item => {
-      const itemDate = new Date(item.businessDate); // Adjust based on the field you are filtering
+    // Format the start and end dates to 'MM-DD-yy'
+    const formattedStartDate = startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+    const formattedEndDate = endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
   
-      // Make sure to include both boundaries
-      return itemDate >= startDate && itemDate <= endDate ||
-             item.account.includes(this.reconciledAccount) ||
-             item.amount === this.reconciledAmount;
-    });
-    this.ngxService.stop();
-   
+    // Call the service to fetch data by date range
+    this.reconcilationService.getOutReconciledByDateInterval(formattedStartDate, formattedEndDate).subscribe(
+      (data) => {
+        this.filteredReconcileds = data.filter(
+          (item) =>
+            (item.account.includes(this.reconciledAccount) || !this.reconciledAccount) &&
+            (item.amount === this.reconciledAmount || !this.reconciledAmount)
+        );
+        this.ngxService.stop();
+      },
+      (error) => {
+        console.error('Error fetching reconciled data', error);
+        this.ngxService.stop();
+      }
+    );
   }
   
-    // Similar logic for CBC and ATS tabs
-    onMultipleCBCSearch() {
-      this.ngxService.start();
-   
-      // Convert cbcStartDate and cbcEndDate to Date objects
-      const startDate = new Date(this.cbcStartDate);
-      const endDate = new Date(this.cbcEndDate);
-    console.log("cbcEndDate",this.cbcEndDate)
-    console.log("cbcStartDate",this.cbcStartDate)
-      // Normalize start date to the beginning of the day (00:00:00)
-      startDate.setHours(0, 0, 0, 0);
-    
-      // Normalize end date to the end of the day (23:59:59)
-      endDate.setHours(23, 59, 59, 999);
-    
-      this.filteredOutRtgsCbc = this.outRtgsCbc.filter(it => {
-        const transactionDate = new Date(it.datet);
-        console.log("datet",it.datet)
-        console.log("transactionDate",transactionDate)
-        console.log("outRtgsCbc",this.outRtgsCbc)
-     
-        // Check if the transaction date is within the date range, inclusive
-        const isWithinDateRange = (!this.cbcStartDate || transactionDate >= startDate) &&
-                                  (!this.cbcEndDate || transactionDate <= endDate);
-    
-        const matchesAccount = !this.cbcAccount || it.account.includes(this.cbcAccount);
-        const matchesAmount = !this.cbcAmount || it.amount == this.cbcAmount;
-    
-        return isWithinDateRange && matchesAccount && matchesAmount;
-          
-      });  console.log("filteredOutRtgsCbc",this.filteredOutRtgsCbc)
-
-      this.ngxService.stop();
-   
-    }
-    
-    onMultipleATSSearch() {
-      this.ngxService.start();
-   
-      // Convert atsStartDate and atsEndDate to Date objects
-      const startDate = new Date(this.atsStartDate);
-      const endDate = new Date(this.atsEndDate);
-    
-      // Normalize start date to the beginning of the day (00:00:00)
-      startDate.setHours(0, 0, 0, 0);
-    
-      // Normalize end date to the end of the day (23:59:59)
-      endDate.setHours(23, 59, 59, 999);
-    
-      this.filteredOutRtgsAts = this.outRtgsAts.filter(it => {
-        const businessDate = new Date(it.businessDate);
-    
-        // Check if the business date is within the date range, inclusive
-        const isWithinDateRange = (!this.atsStartDate || businessDate >= startDate) &&
-                                  (!this.atsEndDate || businessDate <= endDate);
-    
-        const matchesAccount = !this.atsAccount || it.orderingAccount.includes(this.atsAccount);
-        const matchesAmount = !this.atsAmount || it.amount == this.atsAmount;
-    
-        return isWithinDateRange && matchesAccount && matchesAmount;
-      });
-      this.ngxService.stop();
-   
-    }
+  // Method for CBC search
+  onMultipleCBCSearch(): void {
+    this.ngxService.start();
+  
+    // Normalize start and end date
+    const startDate = new Date(this.cbcStartDate);
+    const endDate = new Date(this.cbcEndDate);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+  
+    // Format the start and end dates to 'MM-DD-yy'
+    const formattedStartDate = startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+    const formattedEndDate = endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+  
+    // Call the service to fetch data by date range
+    this.reconcilationService.getOutRtgsCbcByDateInterval(formattedStartDate, formattedEndDate).subscribe(
+      (data) => {
+        this.filteredOutRtgsCbc = data.filter(
+          (it) =>
+            (!this.cbcAccount || it.account.includes(this.cbcAccount)) &&
+            (!this.cbcAmount || it.amount === this.cbcAmount)
+        );
+        this.ngxService.stop();
+      },
+      (error) => {
+        console.error('Error fetching CBC data', error);
+        this.ngxService.stop();
+      }
+    );
+  }
+  
+  // Method for ATS search
+  onMultipleATSSearch(): void {
+    this.ngxService.start();
+  
+    // Normalize start and end date
+    const startDate = new Date(this.atsStartDate);
+    const endDate = new Date(this.atsEndDate);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+  
+    // Format the start and end dates to 'MM-DD-yy'
+    const formattedStartDate = startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+    const formattedEndDate = endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
+  
+    // Call the service to fetch data by date range
+    this.reconcilationService.getOutRtgsAtsByDateInterval(formattedStartDate, formattedEndDate).subscribe(
+      (data) => {
+        this.filteredOutRtgsAts = data.filter(
+          (it) =>
+            (!this.atsAccount || it.orderingAccount.includes(this.atsAccount)) &&
+            (!this.atsAmount || it.amount === this.atsAmount)
+        );
+        this.ngxService.stop();
+      },
+      (error) => {
+        console.error('Error fetching ATS data', error);
+        this.ngxService.stop();
+      }
+    );
+  }
+  
+  
 }
