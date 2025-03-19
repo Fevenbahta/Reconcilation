@@ -1,33 +1,35 @@
-<div class="login mt-5">
-  <div class="row">
-    <!-- Introduction Text on the Side -->
-     
-    <div class="col-md-6 intro-text">
-      
-      <p> <b>Welcome to the LIB-Reconcilation</b></p>
+<div class="background-container  d-flex justify-content-center align-items-center">
 
+  <div class="overlay"></div> <!-- Blurred Overlay -->
+  <div class="login row shadow-lg rounded p-4">
+    <!-- Left Side: Introduction Text -->
+    <!-- <div class="col-md-6 intro-text p-4 d-flex flex-column justify-content-center align-items-center">
+      <img src="/assets/img/legal1.jpg" alt="Welcome Cartoon" class="cartoon-img mb-3">
+      <p class="welcome-text textcolor">
+        Welcome! Register Collateral Assets Efficiently for Lion International Bank S.C.
+      </p>
     </div>
+     -->
 
-    <!-- Login Form -->
-    <div class="col-md-6">
-      <div class="">
-        <a class="simple-text">
-          <img class="logo-img" src="/assets/img/logolib.png"/>
-          <span class="ml-2 logo-text">Lion International Bank S.C</span>
-        </a>
+    <!-- Right Side: Login Form -->
+    <div class="col-md-12 text-center">
       
-      <div class="login-container mt-3">
-        <h2>Login</h2>
+      <a class="simple-text">
+        <img class="logo-img mb-4" src="/assets/img/logolib.png" alt="LIB Logo" />
+      </a>
+      <div class="login-container">
+        <h2 class="mb-3">Login</h2>
         <form (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" [(ngModel)]="username" name="username" required>
+          <div class="form-group mb-3">
+            <label for="username" class="form-label move-left">Username</label>
+            <input type="text" id="username" [(ngModel)]="username" name="username" required class="form-control">
           </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" [(ngModel)]="password" name="password" required>
+          <div class="form-group mb-3">
+            <label for="password" class="form-label move-left">Password</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password" required class="form-control">
           </div>
-          <button type="submit">Login</button>
+          
+          <button type="submit" class="btn color w-100">Login</button>
           <mat-error *ngIf="authService.locked" class="pull-right">Account is locked</mat-error>
           <mat-error *ngIf="!authService.locked && authService.suspended" class="pull-right">User is Suspended</mat-error>
           <mat-error *ngIf="!authService.locked && !authService.suspended && authService.roleincorrect" class="pull-right">Role is not assigned</mat-error>
